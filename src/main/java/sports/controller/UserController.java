@@ -20,19 +20,25 @@ public class UserController {
     *  用户注册模块
     *  包含用户注册信息判断，为用户生成身份唯一标识符
     * */
-    @RequestMapping(value = "/loginInfo",consumes = "application/json")
-    public @ResponseBody String loginInfo(@RequestBody User user) throws NoSuchAlgorithmException {
+    @RequestMapping(value = "/loginInfo")
+    @ResponseBody
+    public NoteResult loginInfo(@RequestBody User user,HttpServletResponse response) throws NoSuchAlgorithmException {
         System.out.println("===================表现层执行结果=====================");
         String name = user.getUsername();
         String password = user.getPassword();
         NoteResult noteResult =  userService.register(name,password);
         String noteResultJson = JSON.toJSONString(noteResult);
         System.out.println("========================"+noteResultJson+"======================");
-        return noteResultJson;
+        return noteResult;
     }
-    @GetMapping("/hello")
-    public void test(){
-        System.out.println("helloworld");
+    @RequestMapping(path = "/checkLogin")
+    @ResponseBody
+    public NoteResult checkLogin(@RequestBody User user) throws NoSuchAlgorithmException {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        NoteResult noteResult = userService.login(username,password);
+        String noteResultJson = JSON.toJSONString(noteResult);
+        System.out.println("========================"+noteResultJson+"======================");
+        return noteResult;
     }
-
 }

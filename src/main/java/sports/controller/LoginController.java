@@ -18,12 +18,5 @@ public class LoginController {
     /*
      * 用户登陆模块
      * */
-    @RequestMapping(path = "/checkLogin")
-    @ResponseBody
-    public NoteResult checkLogin(@RequestBody User user) throws NoSuchAlgorithmException {
-        String username = user.getUsername();
-        String password = user.getPassword();
-        NoteResult result = userService.login(username,password);
-        return result;
-    }
+
 }

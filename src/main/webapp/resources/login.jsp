@@ -13,7 +13,8 @@
     <script type="text/javascript">
         $(function() {
             $("#btn-order").click(function () {
-                alert("预约成功");
+
+                //alert("预约成功");
             })
         })
     </script>
@@ -37,18 +38,21 @@
             <label class="la1">欢迎使用羽毛球预约系统</label><br>
         </div>
         <br>
-        <div class="user-login">
-            用户名：<input type="text" name="用户名" class="login-name" style="width: 40%" />
-        </div>
-        <div class="user-word">
-            密 - 码：<input type="password" name="密码" class="login-word" style="width: 40%" />
-        </div>
-        <div class="switch" >
-            记住密码: &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" />
-        </div>
-        <div class="order-btn">
-            <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="登陆">
-        </div>
+        <form action="/sports/user/login" method="post">
+            <div class="user-login">
+                用户名：<input type="text" name="用户名" class="login-name" style="width: 40%" />
+            </div>
+            <div class="user-word">
+                密 - 码：<input type="password" name="密码" class="login-word" style="width: 40%" />
+            </div>
+            <div class="switch" >
+                记住密码: &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" />
+            </div>
+            <div class="order-btn">
+                <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="登陆">
+            </div>
+        </form>
+
         <div class="optionr-btn">
             <a href="#">忘记密码</a> <a href="register.jsp">注册</a>
         </div>

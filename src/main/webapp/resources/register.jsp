@@ -12,32 +12,31 @@
     <script type="text/javascript">
         $(function () {
             $("#btn-order").click(function () {
-                var form = document.forms[0];
-                form.method = 'POST';
-                form.submit('','post');
-                // var uname = $(".login-name").val().trim();
-                // var upwd = $(".login-word").val().trim();
-                // alert("aaa");
-                // $.ajax({
-                //     url:"http://localhost:8080/sports/user/loginInfo",
-                //     contentType:"application/json;charset=UTF-8",
-                //     data:'{"username":"'+uname+'","password":"'+upwd+'"}',
-                //     dataType:"json",
-                //     type:"post",
-                //     success:function (data) {
-                //         if(data.status==0){
-                //             alert(data.msg);
-                //             $("#back").click();
-                //         }else if(data.status==1){ //用户已存在
-                //             $("#warning_1 span").html(data.msg);
-                //             $("#warning_1").show();//显示提示信息
-                //         }
-                //     }
-                // });
+                // var form = document.forms[0];
+                // form.method = 'POST';
+                // form.submit('','post');
+                var uname = $(".login-name").val().trim();
+                var upwd = $(".login-word").val().trim();
+                alert("aaa");
+                $.ajax({
+                    url:"http://localhost:8080/sports/user/loginInfo",
+                    contentType:"application/json;charset=UTF-8",
+                    data:'{"username":"'+uname+'","password":"'+upwd+'"}',
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        if(data.status == 0){
+                            alert("注册成功！");
+                            $("#back").click();
+                        }else if(data.status==1){ //用户已存在
+                            $("#warning_1 span").html(data.msg);
+                            $("#warning_1").show();//显示提示信息
+                        }
+                    }
+                });
 
             });
             $("#back").click(function () {
-                alert("a");
                 location.href='login.jsp';
             })
         });
