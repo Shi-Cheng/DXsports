@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sports.entity.NoteResult;
 import sports.entity.User;
+import sports.entity.UserReserve;
 import sports.service.UserService;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -48,4 +49,15 @@ public class UserController {
         System.out.println("========================"+noteResultJson+"======================");
         return noteResult;
     }
+
+    @RequestMapping(value = "/activityOrder",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public UserReserve activityOrder(@RequestBody String activityDate, int activityStatus, @CookieValue("uid") String uid){
+        System.out.println("===============this is activityOrder=================");
+        UserReserve userReserve = userService.ActivityOptions(activityDate,uid,activityStatus);
+        System.out.println(userReserve);
+        return userReserve;
+    }
+
+
 }

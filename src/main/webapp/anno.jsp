@@ -5,17 +5,14 @@
 </head>
 <body>
 
-    <a href="anno/testRequestParam?name=hahaha">RequestParam</a><br/><br/>
-
+    <a href="anno/testRequestParam?name=hahah">RequestParam</a><br/><br/>
     <form action="anno/testRequestBody" method="post">
         用户名：<input type="text" name="uname" /><br/>
         用户年龄:<input type="text" name="uage"/> <br/>
-
         <input type="submit" value="提交"><br/><br/>
     </form>
 
     <a href="anno/testPathVariable/10">testPathVariable</a><br/><br/>
-
     <a href="anno/testCookieValue">cookieValue</a>
 
     <form action="anno/testModelAttribute" method="post">

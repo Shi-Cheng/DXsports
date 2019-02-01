@@ -17,17 +17,39 @@
     </style>
     <script type="text/javascript">
         $(function() {
+            var value = $("#activityDate").text();
+            var activityDate = value.split("-").join("");
             $("#btn-order").click(function () {
-                var options =  $("input:radio[name='checks']:checked").val();
-                // $(".test").text(options);
-                $("#status").text(options);
-                alert("修改成功")
+                var activityStatus =  $("input:radio[name='checks']:checked").val();
+                setCookie("activityStatus", activityStatus, 30);
+                if(activityStatus == "1"){
+                    $("#status").text("参加");
+                }else {
+                    $("#status").text("放弃");
+                }
+                $.ajax({
+                    url: "http://localhost:8080/sports/user/activityOrder",
+                    contentType: "application/json;charset=UTF-8",
+                    data: '{"activityDate":"' + activityDate + '","activityStatus":"' + activityStatus+ '"}',
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        alert("ok");
+                    }
+                });
+                function setCookie(cname, cvalue, exdays) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                    var expires = "expires=" + d.toGMTString();
+                    document.cookie = cname + "=" + cvalue + "; " + expires;
+                }
+
             })
         })
     </script>
 
 </head>
-<body>
+<body onload="webLocation()">
 <form>
     <div class="bar-top">
         <ul>
@@ -42,17 +64,17 @@
         <img src="${pageContext.request.contextPath}/resources/images/1.png"/>
         <div class="active-title">
             <label class="la1">活动名称：高尔夫球赛</label><br/>
-            <label class="la2">活动日期：2019-01-01</label><br/>
+            <label class="la2">活动日期：<div id="activityDate">2019-01-01</div></label><br/>
             <!--<span id="status" class="status"></span>-->
             <!--当前状态：<div id="status" class="test"></div>-->
-            参加状态：<span id="status" ></span>
+            参加状态：<span id="status" >参加</span>
 
         </div>
         <br>
         <div class="options">
             <label >本次活动：</label>
-            <input type="radio" name="checks" id="option1" value="放弃"> 放弃&nbsp;&nbsp;
-            <input type="radio" name="checks" id="option2" value="参加" checked="checked"> 参加
+            <input type="radio" name="checks" id="option1" value="0"> 放弃&nbsp;&nbsp;
+            <input type="radio" name="checks" id="option2" value="1" checked="checked"> 参加
         </div>
         <div class="order-btn">
             <input type="button" id="btn-order" class="btn btn-success" style="width: 100%; margin-top: 20%" value="确定修改">

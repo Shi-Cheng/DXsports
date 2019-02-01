@@ -22,10 +22,13 @@
                     type:"post",
                     success:function (data) {
                         if(data.status == 0){
-
-                            alert("注册成功！");
+                            alert("注册成功！将返回到登陆页面");
+                            var username = data.username;
+                            var password = data.password;
+                            setCookie("username", username, 2);
+                            setCookie("password", password, 2);
                             $("#back").click();
-                        }else if(data.status==1){ //用户已存在
+                        }else if(data.status == 1){ //用户已存在
                             $("#warning_1 span").html(data.msg);
                             $("#warning_1").show();//显示提示信息
                         }
@@ -35,7 +38,13 @@
             });
             $("#back").click(function () {
                 location.href='login.jsp';
-            })
+            });
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toGMTString();
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+            }
         });
     </script>
 

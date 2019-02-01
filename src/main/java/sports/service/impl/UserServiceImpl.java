@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import sports.entity.NoteResult;
 import sports.entity.User;
 import sports.entity.UserNameKey;
+import sports.entity.UserReserve;
 import sports.service.UserService;
 import sports.util.UserUtil;
 import java.security.NoSuchAlgorithmException;
@@ -49,16 +50,19 @@ public class UserServiceImpl implements UserService {
         }
         //UUIDKey 记录形式
         User user = new User();
+
+        String userUUID = UserUtil.creadid();
         user.setUsername(username);
         String md5_pwd = UserUtil.md5(password);
         user.setPassword(md5_pwd);
-        String userUUID = UserUtil.creadid();
-
-        Map<String,User> userMap = new HashMap<>();
-        userMap.put(userUUID,user);
-        JSONObject userJSON = JSONObject.fromObject(userMap);
-
-        //UserNameKey记录形式
+        user.setUserID(userUUID);
+        //存储为{"userID":userID,"username":username,"password":password } 形式
+        JSONObject userJson = JSONObject.fromObject(user);
+//        Map<String,User> userMap = new HashMap<>();
+//        userMap.put(userUUID,user);
+//        //存储为{"userID":userID,"username":username,"password":password } 形式
+//        JSONObject userJSON = JSONObject.fromObject(userMap);
+        //UserNameKey记录形式{ "userNameKey",{{"userID":userID,"username":username,"password":password }" }
         UserNameKey unk = new UserNameKey();
         unk.setUsername(username);
         unk.setPassword(md5_pwd);
@@ -73,7 +77,8 @@ public class UserServiceImpl implements UserService {
         Map<String,UserNameKey> userNameKeyMap = new HashMap<>();
         userNameKeyMap.put(username,unk);
         JSONObject userNameKeyJSON = JSONObject.fromObject(userNameKeyMap);
-
+        System.out.println("=======UUID为key========="+userJson+"==================");
+        System.out.println("=======name为key========="+userNameKeyJSON+"================");
         //调用UserDao进行保存
 //        userDao.save(userJSON);//模拟<UUID,Value>上链
 //        userDao.save(userNameKeyJSON); //模拟<UserNameKey.Value> 上链
@@ -81,7 +86,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserNameKey fingByUserName(String user) {
-        return null;
+    public UserReserve ActivityOptions(String activity_id, String user_id, int reserve_status) {
+
+        UserReserve userReserve = new UserReserve();
+        String activityUUID = UserUtil.creadid();
+
+        userReserve.setReserve_id(activityUUID); //用户预约的id
+        userReserve.setActivity_id(activity_id);//用户预约活动的id  把活动开始时间记录为活动的id 日期形式
+        userReserve.setUser_id(user_id);//用户id
+        userReserve.setReserve_status(reserve_status);//预约状态
+        //第一种上链内容，普通上链
+        JSONObject userReserveJson = JSONObject.fromObject(userReserve);
+        //第二种上链内容，<日期，value> 通过日期查询相关的信息 每个用户有一个userid，通过userid查询用户信息
+        Map<String,UserReserve> userReserveMap = new HashMap<>();
+        userReserveMap.put(activity_id,userReserve);
+        JSONObject userReserveMapJson = JSONObject.fromObject(userReserveMap);
+
+        System.out.println(userReserveJson);
+        System.out.println(userReserveMapJson);
+        return userReserve;
     }
+
 }

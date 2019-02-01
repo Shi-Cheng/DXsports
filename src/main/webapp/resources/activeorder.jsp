@@ -12,16 +12,18 @@
 
     <script type="text/javascript">
         $(function() {
+            var value = $("#activityDate").text();
+            var newValue = value.split("-").join("");
+
             $("#btn-order").click(function () {
-                alert("恭喜，预约成功");
-                location.href='activityOptions.jsp';
+                window.location.href = "activityOptions.jsp?activityid="+newValue;
             })
         })
     </script>
 
 </head>
 <body>
-<form>
+<form action="/sports/user/activityOrder" method="post">
     <div class="bar-top">
         <ul>
             <li><a href="index.jsp">首页</a></li>
@@ -34,15 +36,13 @@
     <div class="active-img">
         <img src="${pageContext.request.contextPath}/resources/images/1.png"/>
         <div class="active-title">
-            <label class="la1">活动名称：高尔夫球赛</label><br>
+            <label class="la1">活动名称：羽毛球赛</label><br>
             <label class="la2">活动主题：深化友谊，促进交流</label><br>
-            <label class="la3">活动日期：2019-01-01</label>
+            <label class="la3">活动日期：<div id="activityDate">2019-01-01</div></label>
         </div>
         <br>
-
         <div class="active-content">
-            高尔夫运动具有浓烈的商务性质和绅士气质，能够完美地诠释本活动对象的不凡品质。参赛者在挥杆比赛激烈角逐中，深化友谊，
-            促进交流，览尽XX 山迷人风光。凡是对高尔夫感兴趣的活动参与者特别是意向大客户都可以报名参加比赛，此次球赛意在为俱乐部成立和项目销售做好铺垫。高尔夫运动具有浓烈的商务性质和绅士气质，能够完美地诠释本活动对象的不凡品质。参赛者在挥杆比赛激烈角逐中，深化友谊，
+            羽毛球运动具有浓烈的商务性质和绅士气质，能够完美地诠释本活动对象的不凡品质。参赛者在挥杆比赛激烈角逐中，深化友谊，
             促进交流，览尽XX 山迷人风光。凡是对高尔夫感兴趣的活动参与者特别是意向大客户都可以报名参加比赛，此次球赛意在为俱乐部成立和项目销售做好铺垫。高尔夫运动具有浓烈的商务性质和绅士气质，能够完美地诠释本活动对象的不凡品质。参赛者在挥杆比赛激烈角逐中，深化友谊，
             促进交流，览尽XX 山迷人风光。凡是对高尔夫感兴趣的活动参与者特别是意向大客户都可以报名参加比赛，此次球赛意在为俱乐部成立和项目销售做好铺垫。
         </div>

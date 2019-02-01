@@ -51,10 +51,6 @@
                         type: "post",
                         success: function (data) {
                             if (data.status == 0) { //用户存在
-                                var username = data.username;
-                                var password = data.password;
-                                setCookie("username", username, 30);
-                                setCookie("password", password, 30);
                             } else if (data.status == 0) { //用户名不存在
                                 $("#count_msg").html(data.msg);
                             } else if (data.status == 2) { //密码不正确
@@ -66,18 +62,11 @@
                 $("#back").click(function () {
                     location.href = 'index.jsp';
                 });
-                function setCookie(cname, cvalue, exdays) {
-                    var d = new Date();
-                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-                    var expires = "expires=" + d.toGMTString();
-                    document.cookie = cname + "=" + cvalue + "; " + expires;
-                }
             });
         })
     </script>
 </head>
 <body onload="checkCookie()">
-<form>
     <div class="bar-top">
         <ul>
             <li><a href="index.jsp">首页</a></li>
@@ -95,7 +84,7 @@
         <br>
         <form action="/sports/user/checkLogin" method="post">
             <div class="user-login">
-                用户名：<input type="text" id="login_name" name="user.name" class="login-name" style="width: 40%" /><br/>
+                姓 - 名：<input type="text" id="login_name" name="user.name" class="login-name" style="width: 40%" /><br/>
                 <span id="count_msg" style="color:red"></span>
             </div>
             <div class="user-word">
@@ -122,6 +111,5 @@
             <a href="register.jsp">注册</a>
         </div>
     </div>
-</form>
 </body>
 </html>
