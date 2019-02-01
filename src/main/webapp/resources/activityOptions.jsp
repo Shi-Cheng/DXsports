@@ -27,6 +27,7 @@
                 }else {
                     $("#status").text("放弃");
                 }
+                console.log("================="+activityStatus+"=======================");
                 $.ajax({
                     url: "http://localhost:8080/sports/user/activityOrder",
                     contentType: "application/json;charset=UTF-8",
@@ -34,7 +35,7 @@
                     dataType: "json",
                     type: "post",
                     success: function (data) {
-                        alert("ok");
+                        console.log("=============="+data.reserve_status+"================")
                     }
                 });
                 function setCookie(cname, cvalue, exdays) {
@@ -49,7 +50,7 @@
     </script>
 
 </head>
-<body onload="webLocation()">
+<body>
 <form>
     <div class="bar-top">
         <ul>

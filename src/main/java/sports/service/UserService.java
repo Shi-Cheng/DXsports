@@ -1,18 +1,14 @@
 package sports.service;
 import sports.entity.NoteResult;
-import sports.entity.UserNameKey;
 import sports.entity.UserReserve;
 
 import java.security.NoSuchAlgorithmException;
 
 public interface UserService {
-
     //通过用户名及密码核查用户登陆
     NoteResult login(String username , String password) throws NoSuchAlgorithmException;
     //添加用户
     NoteResult  register(String username , String password) throws NoSuchAlgorithmException;
     //用户预约状态
-    UserReserve ActivityOptions (String activity_id, String user_id, int reserve_status);
-
-
+    UserReserve ActivityOptions (String activity_id, String user_id, String reserve_status);
 }

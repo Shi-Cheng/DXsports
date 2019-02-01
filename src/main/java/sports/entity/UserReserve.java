@@ -11,7 +11,7 @@ public class UserReserve implements Serializable {
     private String reserve_id;
     private String activity_id;
     private String user_id;
-    private Integer reserve_status;
+    private String reserve_status;
 
     public String getReserve_id() {
         return reserve_id;
@@ -37,11 +37,11 @@ public class UserReserve implements Serializable {
         this.user_id = user_id;
     }
 
-    public Integer getReserve_status() {
+    public String getReserve_status() {
         return reserve_status;
     }
 
-    public void setReserve_status(Integer reserve_status) {
+    public void setReserve_status(String reserve_status) {
         this.reserve_status = reserve_status;
     }
 

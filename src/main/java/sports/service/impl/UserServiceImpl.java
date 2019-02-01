@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserReserve ActivityOptions(String activity_id, String user_id, int reserve_status) {
+    public UserReserve ActivityOptions(String activity_id, String user_id, String reserve_status) {
 
         UserReserve userReserve = new UserReserve();
         String activityUUID = UserUtil.creadid();
@@ -102,8 +102,8 @@ public class UserServiceImpl implements UserService {
         userReserveMap.put(activity_id,userReserve);
         JSONObject userReserveMapJson = JSONObject.fromObject(userReserveMap);
 
-        System.out.println(userReserveJson);
-        System.out.println(userReserveMapJson);
+        System.out.println("========普通上链的格式======"+userReserveJson+"===================");
+        System.out.println("=======UserID上链的格式============"+userReserveMapJson+"===================");
         return userReserve;
     }
 

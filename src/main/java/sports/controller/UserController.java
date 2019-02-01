@@ -1,5 +1,7 @@
 package sports.controller;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,34 +30,29 @@ public class UserController {
         String name = user.getUsername();
         String password = user.getPassword();
         NoteResult noteResult =  userService.register(name,password);
-
         String userUUID = noteResult.getUserID();
         Cookie userID = new Cookie("uid",userUUID);
         response.addCookie(userID);
-
         String noteResultJson = JSON.toJSONString(noteResult);
-
-        System.out.println("========================"+noteResultJson+"======================");
         return noteResult;
     }
     @RequestMapping(value = "/checkLogin",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public NoteResult checkLogin(@RequestBody User user,@CookieValue("uid") String uid) throws NoSuchAlgorithmException {
-        System.out.println("===================="+uid+"======================");
         String username = user.getUsername();
         String password = user.getPassword();
         NoteResult noteResult = userService.login(username,password);
         String noteResultJson = JSON.toJSONString(noteResult);
-        System.out.println("========================"+noteResultJson+"======================");
         return noteResult;
     }
 
     @RequestMapping(value = "/activityOrder",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public UserReserve activityOrder(@RequestBody String activityDate, int activityStatus, @CookieValue("uid") String uid){
-        System.out.println("===============this is activityOrder=================");
+    public UserReserve activityOrder(@RequestBody String activityBody, @CookieValue("uid") String uid){
+        JSONObject jsonObject = JSONObject.parseObject(activityBody);
+        String activityDate = jsonObject.get("activityDate").toString();
+        String activityStatus = jsonObject.get("activityStatus").toString();
         UserReserve userReserve = userService.ActivityOptions(activityDate,uid,activityStatus);
-        System.out.println(userReserve);
         return userReserve;
     }
 

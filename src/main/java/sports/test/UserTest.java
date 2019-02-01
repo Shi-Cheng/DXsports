@@ -13,7 +13,6 @@ public class UserTest {
         ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         //获取对象
         UserService  userService = (UserService) ac.getBean("userService");
-        userService.fingByUserName("aaaa");
         //调方法
     }
 
