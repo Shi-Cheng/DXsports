@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService {
 
         UserReserve userReserve = new UserReserve();
         String activityUUID = UserUtil.creadid();
-
         userReserve.setReserve_id(activityUUID); //用户预约的id
         userReserve.setActivity_id(activity_id);//用户预约活动的id  把活动开始时间记录为活动的id 日期形式
         userReserve.setUser_id(user_id);//用户id

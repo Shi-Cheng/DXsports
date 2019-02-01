@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/activeorder.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-
     <style type="text/css">
         .options{
             margin-left: 0px;
@@ -27,7 +26,6 @@
                 }else {
                     $("#status").text("放弃");
                 }
-                console.log("================="+activityStatus+"=======================");
                 $.ajax({
                     url: "http://localhost:8080/sports/user/activityOrder",
                     contentType: "application/json;charset=UTF-8",
@@ -35,16 +33,10 @@
                     dataType: "json",
                     type: "post",
                     success: function (data) {
-                        console.log("=============="+data.reserve_status+"================")
+                        //前台获取用户预约的状态，进行动态显示
+                        console.log("=============="+data.reserve_status+"================");
                     }
                 });
-                function setCookie(cname, cvalue, exdays) {
-                    var d = new Date();
-                    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-                    var expires = "expires=" + d.toGMTString();
-                    document.cookie = cname + "=" + cvalue + "; " + expires;
-                }
-
             })
         })
     </script>
