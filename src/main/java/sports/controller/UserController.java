@@ -7,6 +7,7 @@ import sports.entity.NoteResult;
 import sports.entity.User;
 import sports.service.UserService;
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,20 +21,26 @@ public class UserController {
     *  用户注册模块
     *  包含用户注册信息判断，为用户生成身份唯一标识符
     * */
-    @RequestMapping(value = "/loginInfo")
+    @RequestMapping(value = "/loginInfo",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public NoteResult loginInfo(@RequestBody User user,HttpServletResponse response) throws NoSuchAlgorithmException {
-        System.out.println("===================表现层执行结果=====================");
         String name = user.getUsername();
         String password = user.getPassword();
         NoteResult noteResult =  userService.register(name,password);
+
+        String userUUID = noteResult.getUserID();
+        Cookie userID = new Cookie("uid",userUUID);
+        response.addCookie(userID);
+
         String noteResultJson = JSON.toJSONString(noteResult);
+
         System.out.println("========================"+noteResultJson+"======================");
         return noteResult;
     }
-    @RequestMapping(path = "/checkLogin")
+    @RequestMapping(value = "/checkLogin",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public NoteResult checkLogin(@RequestBody User user) throws NoSuchAlgorithmException {
+    public NoteResult checkLogin(@RequestBody User user,@CookieValue("uid") String uid) throws NoSuchAlgorithmException {
+        System.out.println("===================="+uid+"======================");
         String username = user.getUsername();
         String password = user.getPassword();
         NoteResult noteResult = userService.login(username,password);

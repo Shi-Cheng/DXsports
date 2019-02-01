@@ -14,12 +14,12 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public NoteResult  login(String username, String password) throws NoSuchAlgorithmException {
+    public NoteResult login(String username, String password) throws NoSuchAlgorithmException {
         //User user = userDao.findByName(username);   根据username为主键进行判断
        // UserNameKey userNameKey = userDao.findByName(username); //调用查询接口
         NoteResult noteResult = new NoteResult();
         UserNameKey userNameKey = new UserNameKey();
-        if(userNameKey.getUsername() == null){
+        if(userNameKey.getUsername() == null){  //用来模拟，这样会与
             noteResult.setStatus(1);
             noteResult.setMsg("用户名不存在");
             return noteResult;
@@ -64,8 +64,11 @@ public class UserServiceImpl implements UserService {
         unk.setPassword(md5_pwd);
         unk.setUUID(userUUID);
 
+        noteResult.setStatus(0);
+        noteResult.setUsername(username);
+        noteResult.setPassword(password);
         noteResult.setMsg("注册成功");
-        noteResult.setData(userUUID);
+        noteResult.setUserID(userUUID);
 
         Map<String,UserNameKey> userNameKeyMap = new HashMap<>();
         userNameKeyMap.put(username,unk);
