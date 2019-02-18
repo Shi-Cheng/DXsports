@@ -60,7 +60,25 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public NoteResult activityQuery(String activityDate) {
-        return null;
+    public AdminActivity activityQuery(String activityDate) {
+        AdminActivity adminActivity = new AdminActivity();
+        Map<String,String> map = new HashMap<>();
+        map.put("activityDate",activityDate);
+        JSONObject jsonObj = JSONObject.fromObject(map);
+        String activityJson = "{'args':['queryActivity']},"+jsonObj+"]}";
+        //调用智能合约接口，依据活动的时间进行查询，返回查询所得的信息 返回的是 AdminActivity 对象，或者是一个json字符串
+
+        return adminActivity;
+    }
+
+    @Override
+    public String activityUpdate(String activityId) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("activityId",activityId);
+        JSONObject jsonObj = JSONObject.fromObject(map);
+        String activityJson = "{'args':['cancelActivity']},"+jsonObj+"]}";
+        //活动信息的更新   根据活动信息的id，更改活动的状态
+
+        return "success";
     }
 }

@@ -44,4 +44,18 @@ public class AdminController {
             return "fail";
         }
     }
+    @RequestMapping(value = "/activityQuery", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public AdminActivity activityQuery(@RequestBody AdminActivity admin){
+        String activityDate = admin.getActivityDate();
+        AdminActivity adminActivity = adminService.activityQuery(activityDate);
+        return adminActivity;
+    }
+    @RequestMapping(value = "/activityUpdate", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String activityUpdate(@RequestBody AdminActivity admin){
+        String activityId = admin.getActivityUUID();
+        String status = adminService.activityUpdate(activityId);
+        return status;
+    }
 }

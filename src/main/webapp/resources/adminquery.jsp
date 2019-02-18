@@ -33,18 +33,35 @@
     </style>
     <script type="text/javascript">
         $(function() {
+            $("#date-value").blur(function () {
+                $("#count_msg").hide();
+            });
             $("#btn-order").click(function () {
-                var options =  $("#date-value").val().replace(/-/g,"");
-                $("#query-content").text(options);
-                //alert(options);
+                var activityDate =  $("#date-value").val().replace(/-/g,"");
+                var ok = true;
+                if (activityDate == "") {
+                    $("#count_msg").html("查询日期不能为空");
+                    ok = false;
+                }
+                if(ok){
+                    $.ajax({
+                        url: "http://localhost:8080/sports/user/checkLogin",
+                        contentType: "application/json;charset=UTF-8",
+                        data: '{"activityDate":"' + activityDate + '"}',
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            //
+                            console.log(data);
+                        }
+                    });
+                }
             })
         })
     </script>
-
-
 </head>
 <body>
-<form>
+<form action="/sports/admin/activityQuery">
     <div class="bar-top">
         <ul>
             <li><a href="#">首页</a></li>
@@ -63,6 +80,7 @@
         <span class="query-notice">请输入查询时间(格式如：20191127) </span><br/><br/>
         <div class="user-login">
             日期：<input type="date" id="date-value" style="width: 40%" />
+            <span id="count_msg" style="color:red"></span>
         </div>
         <div class="order-btn">
             <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="查询">
