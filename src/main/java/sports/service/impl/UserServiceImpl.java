@@ -20,11 +20,8 @@ public class UserServiceImpl implements UserService {
        // UserNameKey userNameKey = userDao.findByName(username); //调用查询接口
         NoteResult noteResult = new NoteResult();
         UserNameKey userNameKey = new UserNameKey();
-        if(userNameKey.getUsername() == null){  //用来模拟，这样会与
-            noteResult.setStatus(1);
-            noteResult.setMsg("用户名不存在");
-            return noteResult;
-        }
+        if (userLoginCheck(username, noteResult, userNameKey)) return noteResult;
+
         String md5_pwd = UserUtil.md5(password);
         if (!userNameKey.getPassword().equals(md5_pwd)){
             noteResult.setStatus(2);
@@ -41,28 +38,17 @@ public class UserServiceImpl implements UserService {
         //根据字符串来判断用户注册状态  并涉及到上链，两条链，主键分别为   UUID 和 nameUUID
         // UserNameKey userNameKey = userDao.findByName(username); //模拟<UserNameKey.Value>链上查询
         NoteResult noteResult = new NoteResult();
-
-        UserNameKey userNameKey = new UserNameKey(); //调用查询接口
-        if(userNameKey.getUsername() != null ){
-            noteResult.setStatus(1);
-            noteResult.setMsg("用户名不存在");
-            return noteResult;
-        }
-        //UUIDKey 记录形式
+        UserNameKey userNameKey = new UserNameKey();
+        if (userLoginCheck(username, noteResult, userNameKey)) return noteResult;
         User user = new User();
-
         String userUUID = UserUtil.creadid();
         user.setUsername(username);
         String md5_pwd = UserUtil.md5(password);
         user.setPassword(md5_pwd);
         user.setUserID(userUUID);
-        //存储为{"userID":userID,"username":username,"password":password } 形式
+        //{'args':['save',{"password":"lueSGJZetyySpUndWjMBEg==","userID":"d05925b5eb11440db324b5362fc78b3d","username":"111111"}]}
         JSONObject userJson = JSONObject.fromObject(user);
-//        Map<String,User> userMap = new HashMap<>();
-//        userMap.put(userUUID,user);
-//        //存储为{"userID":userID,"username":username,"password":password } 形式
-//        JSONObject userJSON = JSONObject.fromObject(userMap);
-        //UserNameKey记录形式{ "userNameKey",{{"userID":userID,"username":username,"password":password }" }
+        String userJsonSave = "{'args':['createUser',"+userJson+"]}";
         UserNameKey unk = new UserNameKey();
         unk.setUsername(username);
         unk.setPassword(md5_pwd);
@@ -77,12 +63,28 @@ public class UserServiceImpl implements UserService {
         Map<String,UserNameKey> userNameKeyMap = new HashMap<>();
         userNameKeyMap.put(username,unk);
         JSONObject userNameKeyJSON = JSONObject.fromObject(userNameKeyMap);
+        String usernameKeySave = "{'args':['save',"+userNameKeyJSON+"]}";
         System.out.println("=======UUID为key========="+userJson+"==================");
-        System.out.println("=======name为key========="+userNameKeyJSON+"================");
-        //调用UserDao进行保存
-//        userDao.save(userJSON);//模拟<UUID,Value>上链
-//        userDao.save(userNameKeyJSON); //模拟<UserNameKey.Value> 上链
+        System.out.println("=======UUID为key========="+userJsonSave+"==================");
+        System.out.println("=======name为key========="+usernameKeySave+"================");
+        //调用智能合约save的方法
+
         return noteResult;
+    }
+
+    private boolean userLoginCheck(String username, NoteResult noteResult, UserNameKey userNameKey) {
+        Map<String,String> userMap = new HashMap<String,String>();
+        userMap.put("username",username);
+        JSONObject usernameJson = JSONObject.fromObject(userMap);
+        String userCheckInfo = "{'args':['queryUser',"+usernameJson+"]}"; //封装
+        //调用智能合约，根据返回值来判断用户是否存在
+        //下面只是一个模拟
+        if(userNameKey.getUsername() != null ){
+            noteResult.setStatus(1);
+            noteResult.setMsg("用户名不存在");
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -96,10 +98,13 @@ public class UserServiceImpl implements UserService {
         userReserve.setReserve_status(reserve_status);//预约状态
         //第一种上链内容，普通上链
         JSONObject userReserveJson = JSONObject.fromObject(userReserve);
+        String createReserve = "{'args':['createReserve',"+userReserveJson+"]}"; //预约活动信息封装
+
         //第二种上链内容，<日期，value> 通过日期查询相关的信息 每个用户有一个userid，通过userid查询用户信息
         Map<String,UserReserve> userReserveMap = new HashMap<>();
         userReserveMap.put(activity_id,userReserve);
         JSONObject userReserveMapJson = JSONObject.fromObject(userReserveMap);
+        String createDateReserve = "{'args':['createReserve',"+userReserveMapJson+"]}"; //预约活动信息封装
 
         System.out.println("========普通上链的格式======"+userReserveJson+"===================");
         System.out.println("=======UserID上链的格式============"+userReserveMapJson+"===================");

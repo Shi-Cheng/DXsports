@@ -15,5 +15,4 @@ public class UserTest {
         UserService  userService = (UserService) ac.getBean("userService");
         //调方法
     }
-
 }

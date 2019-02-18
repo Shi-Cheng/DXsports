@@ -24,6 +24,9 @@
         .query-notice {
             margin-left: 10%;
         }
+        .active-title{
+            margin-top: 20%;
+        }
     </style>
     <script type="text/javascript">
         $(function () {
@@ -41,18 +44,13 @@
 <form>
     <div class="bar-top">
         <ul>
-            <li><a href="index.jsp">首页</a></li>
-            <li><a href="activeorder.jsp">预约</a></li>
-            <li><a href="activityOptions.jsp">我的预约</a></li>
-            <li><a href="login.jsp">登陆</a></li>
-            <li><a href="adminLogin.jsp">管理员</a></li>
+            <li><a href="#">首页</a></li>
+            <li><a href="activity.jsp">活动发布</a></li>
+            <li><a href="adminupdate.jsp">活动更新</a></li>
+            <li><a href="adminquery.jsp">活动查询</a></li>
         </ul>
     </div>
     <div class="active-img">
-        <div class="active-title">
-            <label class="la1">羽毛球预约活动系统发布</label><br>
-        </div>
-        <br>
         <span class="query-notice"> </span><br/><br/>
         <div class="user-login">
             活动时间：<input type="date" id="activity-date" style="width: 40%"/>
@@ -65,7 +63,6 @@
             <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="添加">
         </div>
         <div id="query-content">
-
         </div>
 
     </div>

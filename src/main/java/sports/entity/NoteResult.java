@@ -1,7 +1,9 @@
 package sports.entity;
 
 import java.io.Serializable;
-
+    /*
+    * 用来进行用户的登陆密码状态信息的记录操作
+    * */
 public class NoteResult implements Serializable {
     private int status;    //状态
     private String msg;   //消息

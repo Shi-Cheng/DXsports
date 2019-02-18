@@ -21,25 +21,65 @@
             padding: 0px;
         }
     </style>
-
+    <script>
+        function checkAdminCookie(){
+            var name = getCookie("adminName");
+            var word = getCookie("adminPWD");
+            $("#login_name").val(name);
+            $("#login_password").val(word);
+        }
+        function getCookie(cname){
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name)==0) { return c.substring(name.length,c.length); }
+            }
+            return "";
+        }
+    </script>
     <script type="text/javascript">
         $(function() {
-
             $("#btn-login").click(function () {
-                var username = $(".login-name").val();
-                var password = $(".login-word").val();
+                var username = $(".login-name").val().trim();
+                var password = $(".login-word").val().trim();
+                alert(username);
                 if(username == "" || password == ""){
                     alert("用户名或密码不能为空");
                 }else{
-                    location.href='adminquery.jsp';
+                    $.ajax({
+                        url: "http://localhost:8080/sports/admin/checkLogin",
+                        contentType: "application/json;charset=UTF-8",
+                        data: '{"username":"' + username + '","password":"' + password + '"}',
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            console.log("=============just a console ============");
+                            console.log("========="+data.msg+"===========")
+                            if (data.status == 0) { //用户存在
+                                setCookie("adminName", username, 2);
+                                setCookie("adminPWD", password, 2);
+                                location.href='adminquery.jsp';
+                            } else if (data.status == 1) { //用户名不存在  此时便于演示设置为0， 实际为data.status == 1
+                                $("#count_msg").html(data.msg);
+                            } else if (data.status == 2) { //密码不正确
+                                $("#password_msg").html(data.msg);
+                            }
+                        }
+                    });
                 }
             })
+            function setCookie(adKey, adValue, adDays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (adDays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toGMTString();
+                document.cookie = adKey + "=" + adValue + "; " + expires;
+            }
         })
     </script>
-
 </head>
-<body>
-<form>
+<body onload="checkAdminCookie()">
+<form action="/sports/admin/checkLogin">
     <div class="active-img">
         <img src="${pageContext.request.contextPath}/resources/images/2.png"/>
         <div class="active-title">
@@ -47,13 +87,10 @@
         </div>
         <br>
         <div class="user-login">
-            UserName：<input type="text" name="用户名" class="login-name"  style="width: 40%" />
+            管理员：<input type="text" id="login_name" name="username" class="login-name"  style="width: 40%" />
         </div>
         <div class="user-word">
-            PassWord：<input type="password" name="密码" class="login-word" style="width: 40%" />
-        </div>
-        <div class="switch" >
-            记住密码: &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" />
+            密-码：<input type="password" id="login_password" name="password" class="login-word" style="width: 40%" />
         </div>
         <div class="order-btn">
             <input type="button" id="btn-login" class="btn btn-success" style="width: 80%" value="登陆">
@@ -63,6 +100,7 @@
             <a href="#">忘记密码</a>
         </div>
     </div>
+
 </form>
 </body>
 </html>

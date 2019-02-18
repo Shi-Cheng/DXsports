@@ -20,7 +20,6 @@
             var activityDate = value.split("-").join("");
             $("#btn-order").click(function () {
                 var activityStatus =  $("input:radio[name='checks']:checked").val();
-                setCookie("activityStatus", activityStatus, 30);
                 if(activityStatus == "1"){
                     $("#status").text("参加");
                 }else {
