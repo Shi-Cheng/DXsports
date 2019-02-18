@@ -54,8 +54,6 @@
                         dataType: "json",
                         type: "post",
                         success: function (data) {
-                            console.log("=============just a console ============");
-                            console.log("========="+data.msg+"===========")
                             if (data.status == 0) { //用户存在
                                 setCookie("adminName", username, 2);
                                 setCookie("adminPWD", password, 2);
@@ -88,9 +86,11 @@
         <br>
         <div class="user-login">
             管理员：<input type="text" id="login_name" name="username" class="login-name"  style="width: 40%" />
+            <span id="count_msg" style="color:red"></span>
         </div>
         <div class="user-word">
             密-码：<input type="password" id="login_password" name="password" class="login-word" style="width: 40%" />
+            <span id="password_msg" style="color: red" ></span>
         </div>
         <div class="order-btn">
             <input type="button" id="btn-login" class="btn btn-success" style="width: 80%" value="登陆">
@@ -100,7 +100,17 @@
             <a href="#">忘记密码</a>
         </div>
     </div>
-
+    <script type="text/javascript">
+        function get(e){
+            return document.getElementById(e);
+        }
+        get('login_name').onblur=function(){
+            get('count_msg').style.display='none';
+        }
+        get('login_password').onblur=function(){
+            get('password_msg').style.display='none';
+        }
+    </script>
 </form>
 </body>
 </html>

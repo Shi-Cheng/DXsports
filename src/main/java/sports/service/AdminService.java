@@ -8,6 +8,6 @@ import java.security.NoSuchAlgorithmException;
 * */
 public interface AdminService {
     NoteResult checkLogin (String username,String password) throws NoSuchAlgorithmException;
-    NoteResult createActivity(String activityDate,String activityPlace,String activityTime);
+    String createActivity(String activityDate,String activityPlace,String activityTime);
     NoteResult activityQuery(String activityDate);
 }

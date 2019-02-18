@@ -31,17 +31,27 @@
     <script type="text/javascript">
         $(function () {
             $("#btn-order").click(function () {
-                var optionsDate = $("#activity-date").val().replace(/-/g, "");
-                var optionsPlace = $("#activity-place").val();
-                //alert(optionsPlace)
-                $("#query-content").html('<h1>'+optionsDate+'</h1>'+'<p>'+optionsPlace+'</p>');
+                var activityDate = $("#activity-date").val().replace(/-/g, "");
+                var activityTime = $("#activity-time").find("option:selected").text();
+                var activityPlace = $("#activity-place").find("option:selected").text();
+                $.ajax({
+                    url: "http://localhost:8080/sports/admin/activityCreate",
+                    contentType: "application/json;charset=UTF-8",
+                    data: '{"activityDate":"' + activityDate + '","activityPlace":"' + activityPlace + '","activityTime":"' + activityTime + '"}',
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+
+                    }
+                })
+
             })
         })
     </script>
 
 </head>
 <body>
-<form>
+<form action="/sports/admin/activityCreate">
     <div class="bar-top">
         <ul>
             <li><a href="#">首页</a></li>
@@ -53,10 +63,19 @@
     <div class="active-img">
         <span class="query-notice"> </span><br/><br/>
         <div class="user-login">
-            活动时间：<input type="date" id="activity-date" style="width: 40%"/>
+            活动日期：<input type="date" id="activity-date" style="width: 40%"/>
         </div>
         <div class="user-login">
-            活动地点：<input type="text" id="activity-place" style="width: 40%"/>
+            活动时间： <select id="activity-time">
+                            <option value="time1">18:00-20:00</option>
+                            <option value="time2">17:00-20:00</option>
+                        </select>
+        </div>
+        <div class="user-login">
+            活动地点：  <select id="activity-place">
+                            <option value="place1">地点1</option>
+                            <option value="place2">地点2</option>
+                        </select>
         </div>
 
         <div class="order-btn">

@@ -3,22 +3,22 @@ package sports.entity;
     * 此用户实例是对活动信息进行操作
     * */
 public class AdminActivity {
-    private String adminID;
+    private String activityUUID;
     private String adminName;
-    private String placeName;
+    private String activityPlace;
     private String activityDate;//活动日期
     private String activityTime;//活动具体时间，通过下拉框的格式进行选择
     private String activityStatus;
 
-    public String getAdminID() {
-        return adminID;
-    }
+        public String getActivityUUID() {
+            return activityUUID;
+        }
 
-    public void setAdminID(String adminID) {
-        this.adminID = adminID;
-    }
+        public void setActivityUUID(String activityUUID) {
+            this.activityUUID = activityUUID;
+        }
 
-    public String getAdminName() {
+        public String getAdminName() {
         return adminName;
     }
 
@@ -26,15 +26,15 @@ public class AdminActivity {
         this.adminName = adminName;
     }
 
-    public String getPlaceName() {
-        return placeName;
-    }
+        public String getActivityPlace() {
+            return activityPlace;
+        }
 
-    public void setPlaceName(String placeName) {
-        this.placeName = placeName;
-    }
+        public void setActivityPlace(String activityPlace) {
+            this.activityPlace = activityPlace;
+        }
 
-    public String getActivityDate() {
+        public String getActivityDate() {
         return activityDate;
     }
 
@@ -60,9 +60,9 @@ public class AdminActivity {
     @Override
     public String toString() {
         return "AdminActivity{" +
-                "adminID='" + adminID + '\'' +
+                "activityUUID='" + activityUUID + '\'' +
                 ", adminName='" + adminName + '\'' +
-                ", placeName='" + placeName + '\'' +
+                ", placeName='" + activityPlace + '\'' +
                 ", activityDate='" + activityDate + '\'' +
                 ", activityTime='" + activityTime + '\'' +
                 ", activityStatus='" + activityStatus + '\'' +
