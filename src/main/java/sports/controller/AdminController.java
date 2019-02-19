@@ -32,9 +32,9 @@ public class AdminController {
     @RequestMapping(value = "/activityCreate", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String activityCreate(@RequestBody AdminActivity adminActivity){
-        String activityDate = adminActivity.getActivityDate();
-        String activityPlace = adminActivity.getActivityPlace();
-        String activityTime = adminActivity.getActivityTime();
+        String activityDate = adminActivity.getActivity_date();
+        String activityPlace = adminActivity.getActivity_place();
+        String activityTime = adminActivity.getActivity_period();
         String createStatus = adminService.createActivity(activityDate,activityPlace,activityTime);
         if(createStatus.equals("success")){
             System.out.println("=======================success=========================");
@@ -47,15 +47,18 @@ public class AdminController {
     @RequestMapping(value = "/activityQuery", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public AdminActivity activityQuery(@RequestBody AdminActivity admin){
-        String activityDate = admin.getActivityDate();
+        String activityDate = admin.getActivity_date();
         AdminActivity adminActivity = adminService.activityQuery(activityDate);
         return adminActivity;
     }
     @RequestMapping(value = "/activityUpdate", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String activityUpdate(@RequestBody AdminActivity admin){
-        String activityId = admin.getActivityUUID();
-        String status = adminService.activityUpdate(activityId);
-        return status;
+    public AdminActivity activityUpdate(@RequestBody AdminActivity admin){
+        String activityId = admin.getActivity_id();
+        AdminActivity status = adminService.activityUpdate(activityId);
+        if (status != null){
+            return status;
+        }
+        return null;
     }
 }

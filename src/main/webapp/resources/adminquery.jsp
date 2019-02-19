@@ -45,14 +45,13 @@
                 }
                 if(ok){
                     $.ajax({
-                        url: "http://localhost:8080/sports/user/checkLogin",
+                        url: "http://localhost:8080/sports/admin/activityQuery",
                         contentType: "application/json;charset=UTF-8",
                         data: '{"activityDate":"' + activityDate + '"}',
                         dataType: "json",
                         type: "post",
                         success: function (data) {
-                            //
-                            console.log(data);
+                            $("#query-content").html('<h1>'+data.activity_place+'</h1>'+'<p>'+data.activity_date+'</p>'+'<p>'+data.activity_status+'</p>');
                         }
                     });
                 }

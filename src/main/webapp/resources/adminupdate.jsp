@@ -18,15 +18,26 @@
     <script type="text/javascript">
         $(function() {
             $("#btn-order").click(function () {
-                var options =  $("input:radio[name='checks']:checked").val();
-                // $(".test").text(options);
-                $("#status").text(options);
-                //$("#status").html('<h1>'+ options + '</h1>')
+                var options = "7f17a4c2303711e9b210d663bd873d93";
+                var status = $("#status1").text();
+                alert(status);
+
+                $.ajax({
+                    url: "http://localhost:8080/sports/admin/activityUpdate",
+                    contentType: "application/json;charset=UTF-8",
+                    data: '{"activityId":"' + options + '"}',
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        //
+                        $("#status1").text(data.activity_status);
+                        //$("#status2").val(data.activity_status);
+                        console.log("============"+data.activity_status+"===========");
+                    }
+                });
             })
         })
     </script>
-
-
 </head>
 <body>
 <form>
@@ -43,7 +54,7 @@
         <div class="active-title">
             <label class="la1">活动名称：羽毛球第二期</label><br/>
             <label class="la2">活动日期：2019-01-01</label><br/>
-            活动状态：<span id="status" ></span>
+            活动状态：<span id="status1" ></span><span id="status2" ></span>
         </div>
         <br>
         <div class="options">
