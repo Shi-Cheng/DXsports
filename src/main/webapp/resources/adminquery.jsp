@@ -51,7 +51,8 @@
                         dataType: "json",
                         type: "post",
                         success: function (data) {
-                            $("#query-content").html('<h1>'+data.activity_place+'</h1>'+'<p>'+data.activity_date+'</p>'+'<p>'+data.activity_status+'</p>');
+
+                            $("#query-content").html('<p style="margin-top:10%"> 查询结果如下</p>'+'<p style="margin-top: 5%; color: #32CD32;"> 活动地点：'+data.activity_place+'</p>'+'<p style="color: #32CD32;"> 活动日期：'+data.activity_date+'</p>');
                         }
                     });
                 }
@@ -65,7 +66,7 @@
         <ul>
             <li><a href="#">首页</a></li>
             <li><a href="activity.jsp">活动发布</a></li>
-            <li><a href="adminupdate.jsp">活动更新</a></li>
+            <li><a href="adminupdate.jsp">最新活动</a></li>
             <li><a href="adminquery.jsp">活动查询</a></li>
         </ul>
     </div>
@@ -76,7 +77,7 @@
             <label class="la1">欢迎使用羽毛球预约系统</label><br>
         </div>
         <br>
-        <span class="query-notice">请输入查询时间(格式如：20191127) </span><br/><br/>
+        <span class="query-notice" style="margin-left: 35%">请输入查询时间 </span><br/><br/>
         <div class="user-login">
             日期：<input type="date" id="date-value" style="width: 40%" />
             <span id="count_msg" style="color:red"></span>
@@ -84,8 +85,7 @@
         <div class="order-btn">
             <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="查询">
         </div>
-        <div id="query-content">
-
+        <div id="query-content" style="text-align: center; margin-top: 10px;">
         </div>
 
     </div>

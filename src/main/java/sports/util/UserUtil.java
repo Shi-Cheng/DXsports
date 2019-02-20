@@ -21,6 +21,6 @@ public class UserUtil {
     }
     public  static  void main (String [] args) throws NoSuchAlgorithmException {
         System.out.println(md5("567"));//测试
-        System.out.println(md5("111111rrrr"));
+        System.out.println(md5("admin"));
     }
 }

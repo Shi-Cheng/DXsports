@@ -28,7 +28,8 @@
         <ul>
             <li><a href="index.jsp">首页</a></li>
             <li><a href="activeorder.jsp">预约</a></li>
-            <li><a href="activityOptions.jsp">我的预约</a></li>
+            <li><a href="activityOptions.jsp">我的预约
+            </a></li>
             <li><a href="login.jsp">登陆</a></li>
             <li><a href="adminLogin.jsp">管理员</a></li>
         </ul>

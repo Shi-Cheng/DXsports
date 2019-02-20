@@ -37,15 +37,24 @@
                 $.ajax({
                     url: "http://localhost:8080/sports/admin/activityCreate",
                     contentType: "application/json;charset=UTF-8",
-                    data: '{"activityDate":"' + activityDate + '","activityPlace":"' + activityPlace + '","activityTime":"' + activityTime + '"}',
+                    data: '{"activity_date":"' + activityDate + '","activity_place":"' + activityPlace + '","activity_period":"' + activityTime + '"}',
                     dataType: "json",
                     type: "post",
                     success: function (data) {
-                        console.log(data);
+                        setCookie("activityID", data.activity_id, 2);
+                        setCookie("activityPlace", data.activity_place, 2);
+                        setCookie("activityDate", data.activity_date, 2);
+                        setCookie("activityStatus", data.activity_status, 2);
                     }
                 })
 
-            })
+            });
+            function setCookie(activityIdKey, activityIdValue, exdays) {
+                var date = new Date();
+                date.setTime(date.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + date.toGMTString();
+                document.cookie = activityIdKey + "=" + activityIdValue + "; " + expires;
+            }
         })
     </script>
 
@@ -56,7 +65,7 @@
         <ul>
             <li><a href="#">首页</a></li>
             <li><a href="activity.jsp">活动发布</a></li>
-            <li><a href="adminupdate.jsp">活动更新</a></li>
+            <li><a href="adminupdate.jsp">最新活动</a></li>
             <li><a href="adminquery.jsp">活动查询</a></li>
         </ul>
     </div>
@@ -66,13 +75,13 @@
             活动日期：<input type="date" id="activity-date" style="width: 40%"/>
         </div>
         <div class="user-login">
-            活动时间： <select id="activity-time">
+            活动时间： <select id="activity-time"  style="width: 40%" >
                             <option value="time1">18:00-20:00</option>
                             <option value="time2">17:00-20:00</option>
                         </select>
         </div>
         <div class="user-login">
-            活动地点：  <select id="activity-place">
+            活动地点：  <select id="activity-place"  style="width: 40%">
                             <option value="place1">地点1</option>
                             <option value="place2">地点2</option>
                         </select>
@@ -81,7 +90,7 @@
         <div class="order-btn">
             <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="添加">
         </div>
-        <div id="query-content">
+        <div id="query-content" style="text-align: center;color: #3D9140; margin-top: 10px;">
         </div>
 
     </div>

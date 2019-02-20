@@ -31,18 +31,16 @@ public class AdminController {
     }
     @RequestMapping(value = "/activityCreate", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public String activityCreate(@RequestBody AdminActivity adminActivity){
+    public AdminActivity activityCreate(@RequestBody AdminActivity adminActivity){
+        //没有传入值
         String activityDate = adminActivity.getActivity_date();
         String activityPlace = adminActivity.getActivity_place();
         String activityTime = adminActivity.getActivity_period();
-        String createStatus = adminService.createActivity(activityDate,activityPlace,activityTime);
-        if(createStatus.equals("success")){
-            System.out.println("=======================success=========================");
-            return "success";
-        }else {
-            System.out.println("=======================fail=========================");
-            return "fail";
-        }
+
+        System.out.println("======================="+activityTime+"=========================");
+        AdminActivity createStatus = adminService.createActivity(activityDate,activityPlace,activityTime);
+        System.out.println("======================="+createStatus.getActivity_id()+"=========================");
+        return createStatus;
     }
     @RequestMapping(value = "/activityQuery", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
