@@ -45,6 +45,7 @@
                         setCookie("activityPlace", data.activity_place, 2);
                         setCookie("activityDate", data.activity_date, 2);
                         setCookie("activityStatus", data.activity_status, 2);
+                        $("#activityAdd").html('<p style="margin-top:10%;color: #32CD32;"> 添加成功,请在最新活动中查看</p>');
                     }
                 })
 
@@ -90,7 +91,7 @@
         <div class="order-btn">
             <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="添加">
         </div>
-        <div id="query-content" style="text-align: center;color: #3D9140; margin-top: 10px;">
+        <div id="activityAdd" style="text-align: center;color: #3D9140; margin-top: 10px;">
         </div>
 
     </div>

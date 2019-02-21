@@ -46,11 +46,12 @@
                     $.ajax({
                         url: "http://localhost:8080/sports/user/checkLogin",
                         contentType: "application/json;charset=UTF-8",
-                        data: '{"username":"' + uname + '","password":"' + upwd + '"}',
+                        data: '{"user_name":"' + uname + '","user_pwd":"' + upwd + '"}',
                         dataType: "json",
                         type: "post",
                         success: function (data) {
                             if (data.status == 0) { //用户存在
+                                location.href='index.jsp';
                             } else if (data.status == 0) { //用户名不存在
                                 $("#count_msg").html(data.msg);
                             } else if (data.status == 2) { //密码不正确

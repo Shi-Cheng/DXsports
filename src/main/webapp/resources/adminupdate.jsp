@@ -52,7 +52,7 @@
                     success: function (data) {
                         if(data.activity_status == 0){
                             $("#status").text("活动以取消");
-                            setCookie("activityStatus", data.activity_status, 2);
+                            setCookie("activityStatus", data.activity_status,2);
                             $("#showInfo").html('<p style="color: #3D9140;"> 修改成功</p>')
                         }
                     }

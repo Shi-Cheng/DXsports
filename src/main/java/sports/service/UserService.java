@@ -10,5 +10,7 @@ public interface UserService {
     //添加用户
     NoteResult  register(String username , String password) throws NoSuchAlgorithmException;
     //用户预约状态
-    UserReserve ActivityOptions (String activity_id, String user_id, String reserve_status);
+    UserReserve ActivityOptions (String activity_id, String user_id);
+    //用户取消预约
+    UserReserve CancelActivity(String activityId,String activityStatus,String userId);
 }

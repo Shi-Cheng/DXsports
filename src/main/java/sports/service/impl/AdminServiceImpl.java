@@ -15,16 +15,17 @@ import java.util.Map;
 public class AdminServiceImpl implements AdminService {
     @Override
     public NoteResult checkLogin(String username, String password) throws NoSuchAlgorithmException {
-        AdminLogin adminLogin = new AdminLogin();
         NoteResult result = new NoteResult();
-
         Map<String,String> adminMap = new HashMap<String,String>();
         adminMap.put("username",username);
         JSONObject jsonObj = JSONObject.fromObject(adminMap);
         String jsonAdmin = "{'args':['queryAdmin',"+jsonObj+"]}";
         //调用智能合约，进行管理员身份校验   根据用户名查询，如果存在则返回密码，如果不存在则返回null
         //需要智能合约返回AdminLogin json数组
-        if(adminLogin.getUsername() != null){
+
+        String adminResult = "{'username':'admin','password':'ISMvKXpXpadDiUoOSoAfww=='}";
+        AdminLogin adminLogin = JSON.parseObject(adminResult,AdminLogin.class);
+        if(adminLogin.getUsername() == null){
             result.setStatus(1);
             result.setMsg("非法用户");
             return result;
@@ -39,7 +40,6 @@ public class AdminServiceImpl implements AdminService {
         result.setMsg("账号信息正确");
         return result;
     }
-
     @Override
     public AdminActivity createActivity(String activityDate, String activityPlace, String activityTime) {
         AdminActivity adminActivity = new AdminActivity();
@@ -58,7 +58,6 @@ public class AdminServiceImpl implements AdminService {
          * */
         return adminActivity;
     }
-
     @Override
     public AdminActivity activityQuery(String activityDate) {
         AdminActivity adminActivity = new AdminActivity();
@@ -100,6 +99,22 @@ public class AdminServiceImpl implements AdminService {
             status = 1;
             return getAdminActivity(adminActivity, activity_palce, activity_date, activity_period, status);
         }
+    }
+
+    @Override
+    public AdminActivity activityLoading(String currentDate) {
+        Map<String,String> map = new HashMap<>();
+        map.put("currentDate",currentDate);
+        JSONObject  obj = JSONObject.fromObject(map);
+        /*
+        * 由系统时间来判断，存在的最新数据
+        * */
+        String currentDateJson = "{'args':['activityLoad',"+obj+"]}";
+
+        String Test = "{'activity_id':'7f17a4c2303711e9b210d663bd873d93','activity_place':'centralpark','activity_period':'6:00-8:00','activity_date':'2019-1-28','activity_status':'1'}";
+        AdminActivity activityInfo = JSON.parseObject(Test, AdminActivity.class); //返回一个活动对象
+        return activityInfo;
+
     }
 
     private AdminActivity getAdminActivity(AdminActivity adminActivity, String activity_palce, String activity_date, String activity_period, int status) {

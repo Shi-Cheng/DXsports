@@ -17,14 +17,15 @@
                 $.ajax({
                     url:"http://localhost:8080/sports/user/loginInfo",
                     contentType:"application/json;charset=UTF-8",
-                    data:'{"username":"'+uname+'","password":"'+upwd+'"}',
+                    data:'{"user_name":"'+uname+'","user_pwd":"'+upwd+'"}',
                     dataType:"json",
                     type:"post",
                     success:function (data) {
                         if(data.status == 0){
                             alert("注册成功！将返回到登陆页面");
-                            var username = data.username;
-                            var password = data.password;
+                            var username = uname;
+                            var password = upwd;
+                            console.log("============"+username);
                             setCookie("username", username, 2);
                             setCookie("password", password, 2);
                             $("#back").click();

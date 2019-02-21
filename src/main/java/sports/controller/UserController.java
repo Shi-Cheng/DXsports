@@ -27,8 +27,8 @@ public class UserController {
     @RequestMapping(value = "/loginInfo",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public NoteResult loginInfo(@RequestBody User user,HttpServletResponse response) throws NoSuchAlgorithmException {
-        String name = user.getUsername();
-        String password = user.getPassword();
+        String name = user.getUser_name();
+        String password = user.getUser_pwd();
         NoteResult noteResult =  userService.register(name,password);
         String userUUID = noteResult.getUserID();
         Cookie userID = new Cookie("uid",userUUID);
@@ -39,22 +39,29 @@ public class UserController {
     @RequestMapping(value = "/checkLogin",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public NoteResult checkLogin(@RequestBody User user,@CookieValue("uid") String uid) throws NoSuchAlgorithmException {
-        String username = user.getUsername();
-        String password = user.getPassword();
+        String username = user.getUser_name();
+        String password = user.getUser_pwd();
         NoteResult noteResult = userService.login(username,password);
         String noteResultJson = JSON.toJSONString(noteResult);
         return noteResult;
     }
-
     @RequestMapping(value = "/activityOrder",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public UserReserve activityOrder(@RequestBody String activityBody, @CookieValue("uid") String uid){
         JSONObject jsonObject = JSONObject.parseObject(activityBody);
-        String activityDate = jsonObject.get("activityDate").toString();
-        String activityStatus = jsonObject.get("activityStatus").toString();
-        UserReserve userReserve = userService.ActivityOptions(activityDate,uid,activityStatus);
+        String activityDate = jsonObject.get("activity_id").toString();
+        UserReserve userReserve = userService.ActivityOptions(activityDate,uid);
         return userReserve;
     }
-
+    //userCancelActivity
+    @RequestMapping(value = "/activityCancel",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public UserReserve activityCancel(@RequestBody String activityBody, @CookieValue("uid") String uid){
+        JSONObject jsonObject = JSONObject.parseObject(activityBody);
+        String activityId = jsonObject.get("activity_id").toString();
+        String activityStatus = jsonObject.get("reserve_status").toString();
+        UserReserve userReserve = userService.CancelActivity(activityId,activityStatus,uid);
+        return userReserve;
+    }
 
 }

@@ -10,6 +10,7 @@ import sports.entity.AdminActivity;
 import sports.entity.AdminLogin;
 import sports.entity.NoteResult;
 import sports.service.AdminService;
+import com.alibaba.fastjson.JSONObject;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -58,5 +59,16 @@ public class AdminController {
             return status;
         }
         return null;
+    }
+    /*
+    * 用户端加载活动信息，返回活动地点、活动日期、活动状态数据
+    * */
+    @RequestMapping(value = "/activityDisplay",produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public AdminActivity activityDisplay(@RequestBody String activityLoad){
+        JSONObject jsonObject = JSONObject.parseObject(activityLoad);
+        String currentdate = jsonObject.get("currentdate").toString();
+        AdminActivity adminActivity = adminService.activityLoading(currentdate);
+        return adminActivity;
     }
 }

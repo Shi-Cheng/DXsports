@@ -12,4 +12,5 @@ public interface AdminService {
     AdminActivity createActivity(String activityDate,String activityPlace,String activityTime);
     AdminActivity activityQuery(String activityDate);
     AdminActivity activityUpdate(String activityId);
+    AdminActivity activityLoading(String currentDate);
 }

@@ -27,7 +27,7 @@
     </script>
 
 </head>
-<body style="background: url('${pageContext.request.contextPath}/resources/images/bg1.png') no-repeat;" onload="checkCookie()">
+<body style="background: url('${pageContext.request.contextPath}/resources/images/bg1.png') no-repeat;" >
 <form>
     <div class="main-body">
         <div class="selections">

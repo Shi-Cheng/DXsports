@@ -43,7 +43,6 @@
             $("#btn-login").click(function () {
                 var username = $(".login-name").val().trim();
                 var password = $(".login-word").val().trim();
-                alert(username);
                 if(username == "" || password == ""){
                     alert("用户名或密码不能为空");
                 }else{

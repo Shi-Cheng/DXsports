@@ -51,7 +51,6 @@
                         dataType: "json",
                         type: "post",
                         success: function (data) {
-
                             $("#query-content").html('<p style="margin-top:10%"> 查询结果如下</p>'+'<p style="margin-top: 5%; color: #32CD32;"> 活动地点：'+data.activity_place+'</p>'+'<p style="color: #32CD32;"> 活动日期：'+data.activity_date+'</p>');
                         }
                     });
