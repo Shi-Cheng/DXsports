@@ -14,13 +14,26 @@ import java.util.Map;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
-
     @Override
     public NoteResult login(String username, String password) throws NoSuchAlgorithmException {
         NoteResult noteResult = new NoteResult();
-        UserNameKey userNameKey = new UserNameKey();
         // 33 111111
-        if (userCheck(username, noteResult)) return noteResult;
+        //if (userCheck(username, noteResult)) return noteResult;
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("user_name", username);
+        JSONObject usernameJson = JSONObject.fromObject(userMap);
+        String userCheckInfo = "{'args':['userLogin'," + usernameJson + "]}";
+        //对于用户登陆  存在用户名则返回user对象，如果不存在返回  fail
+        String result = "{'user_id':'7f17a4c2303711e9b210d663bd873d93','user_name':'33','user_pwd':'lueSGJZetyySpUndWjMBEg=='}";
+        //String result = "fail";
+        System.out.println("============="+username+"========");
+        if (result.equals("fail")) {
+            System.out.println("==============fail===========");
+            noteResult.setStatus(1);
+            noteResult.setMsg("用户名不存在");
+            return noteResult;
+        }
+
         String userCheckResult = "{'user_id':'7f17a4c2303711e9b210d663bd873d93','user_name':'33','user_pwd':'lueSGJZetyySpUndWjMBEg=='}";//检测的密码111111
         User user = JSON.parseObject(userCheckResult,User.class);
         String md5_pwd = UserUtil.md5(password);
@@ -32,31 +45,27 @@ public class UserServiceImpl implements UserService {
         noteResult.setStatus(0);
         noteResult.setMsg("用户名和密码正确");
         return noteResult;
-
-    }
-    private boolean userCheck(String username, NoteResult noteResult) {
-        Map<String, String> userMap = new HashMap<>();
-        userMap.put("user_name", username);
-        JSONObject usernameJson = JSONObject.fromObject(userMap);
-        String userCheckInfo = "{'args':['userLogin'," + usernameJson + "]}"; //封装
-        String result = "{'user_id':'7f17a4c2303711e9b210d663bd873d93','user_name':'33','user_pwd':'lueSGJZetyySpUndWjMBEg=='}";
-        if (result.equals("fail")) {
-            noteResult.setStatus(1);
-            noteResult.setMsg("用户名不存在");
-            return true;
-        }
-        return false;
     }
     @Override
     public NoteResult register(String username, String password) throws NoSuchAlgorithmException {
         NoteResult noteResult = new NoteResult();
-        UserNameKey userNameKey = new UserNameKey();
         User user = new User();
-        System.out.println("============" + username+password);
         //注册用户不能重名，注册前进行校验
-        if (userCheck(username, noteResult))
-            return noteResult;
 
+        Map<String, String> userMap = new HashMap<>();
+        userMap.put("user_name", username);
+        JSONObject usernameJson = JSONObject.fromObject(userMap);
+        String userCheckInfo = "{'args':['userLogin'," + usernameJson + "]}";
+        //对于用户登陆  存在用户名则返回user对象，如果不存在返回  fail
+        String result = "{'user_id':'7f17a4c2303711e9b210d663bd873d93','user_name':'33','user_pwd':'lueSGJZetyySpUndWjMBEg=='}";
+        //String result = "fail";
+        System.out.println("============="+username+"========");
+        if (result.equals("fail")) {
+            System.out.println("==============fail===========");
+            noteResult.setStatus(1);
+            noteResult.setMsg("用户名不存在");
+            return noteResult;
+        }
         String userUUID = UserUtil.creadid();
         user.setUser_name(username);
         String md5_pwd = UserUtil.md5(password);
@@ -80,9 +89,6 @@ public class UserServiceImpl implements UserService {
         userNameKeyMap.put(username,unk);
         JSONObject userNameKeyJSON = JSONObject.fromObject(userNameKeyMap);
         String usernameKeySave = "{'args':['save',"+userNameKeyJSON+"]}";
-        // "{'args':["createUser",+json+]}"
-       // "{'user_id':'abcde','user_name':'user','user_pwd':'abcde'}"
-        //"createUser","{'user_id':'abcde','user_name':'user','user_pwd':'abcde'}"
         System.out.println("=======UUID为key========="+userJson+"==================");
         System.out.println("=======UUID为key========="+userJsonSave+"==================");
         System.out.println("=======name为key========="+usernameKeySave+"================");
@@ -111,7 +117,6 @@ public class UserServiceImpl implements UserService {
         System.out.println("=======UserID上链的格式============"+userReserveMapJson+"===================");
         return userReserve;
     }
-
     /*
     * 用户根据活动id取消活动，用户先查询活动id的相关数据，获取当前参加状态，然后对状态进行修改，再进行
     * */

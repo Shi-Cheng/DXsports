@@ -43,6 +43,7 @@ public class UserController {
         String password = user.getUser_pwd();
         NoteResult noteResult = userService.login(username,password);
         String noteResultJson = JSON.toJSONString(noteResult);
+        System.out.println("==============noteresultjeson"+noteResultJson+"=====================");
         return noteResult;
     }
     @RequestMapping(value = "/activityOrder",produces = {"application/json;charset=UTF-8"})

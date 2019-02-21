@@ -52,7 +52,7 @@
                         success: function (data) {
                             if (data.status == 0) { //用户存在
                                 location.href='index.jsp';
-                            } else if (data.status == 0) { //用户名不存在
+                            } else if (data.status == 1) { //用户名不存在
                                 $("#count_msg").html(data.msg);
                             } else if (data.status == 2) { //密码不正确
                                 $("#password_msg").html(data.msg);
@@ -97,17 +97,6 @@
                 <input type="button" name="" id="back" value=' 返 回 ' style="display: none" tabindex='10'/>
             </div>
         </form>
-        <script type="text/javascript">
-            function get(e){
-                return document.getElementById(e);
-            }
-            get('login_name').onblur=function(){
-                get('count_msg').style.display='none';
-            }
-            get('login_password').onblur=function(){
-                get('password_msg').style.display='none';
-            }
-        </script>
         <div class="optionr-btn">
             <a href="register.jsp">注册</a>
         </div>
