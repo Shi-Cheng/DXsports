@@ -48,7 +48,6 @@
                         $("#activityAdd").html('<p style="margin-top:10%;color: #32CD32;"> 添加成功,请在最新活动中查看</p>');
                     }
                 })
-
             });
             function setCookie(activityIdKey, activityIdValue, exdays) {
                 var date = new Date();
@@ -87,7 +86,6 @@
                             <option value="place2">地点2</option>
                         </select>
         </div>
-
         <div class="order-btn">
             <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="添加">
         </div>

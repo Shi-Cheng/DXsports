@@ -11,6 +11,47 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
     <script type="text/javascript">
+        /**
+         * 自动加载到活动信息
+         */
+        function activityNotice() {
+            var cookieName = getCookie("username");
+            if(cookieName != null){
+                var date = new Date();
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = date.getFullYear() + month + strDate;
+                $.ajax({
+                    url: "http://localhost:8080/sports/admin/activityDisplay",
+                    contentType: "application/json;charset=UTF-8",
+                    data: '{"currentdate":"' + currentdate + '"}',
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        $("#activity_place").text(data.activity_place);
+                        $("#activity_date").text(data.activity_date);
+                        $("#activity_number").text(data.activity_id);
+                        $("#activityStatus").text(data.activity_status);
+                        if(data.activity_status != 0){
+                            $("#status").text("活动进行中");
+                        }else {
+                            $("#status").text("活动以取消");
+                        }
+                    }
+                });
+            }else {
+                window.location = "login.jsp";
+            }
+        }
+        /**
+         * 用户预约活动
+         */
         function order() {
             var activityId = $("#activity_number").text();
             var activityPlace = $("#activity_place").text();
@@ -31,44 +72,6 @@
                     $("#orderInfo").html('<p style="margin-top:10%;color: #32CD32;"> 预约成功,在我的预约中查看</p>');
                 }
             });
-
-
-           // window.location.href = "activityOptions.jsp?activityid="+activityId+"?activityPlace="+activityPlace+"?activityDate="+activityDate;
-        }
-        /**
-         * 自动加载到活动信息
-         */
-        function activityNotice() {
-            var date = new Date();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate = date.getFullYear() + month + strDate;
-            $.ajax({
-                url: "http://localhost:8080/sports/admin/activityDisplay",
-                contentType: "application/json;charset=UTF-8",
-                data: '{"currentdate":"' + currentdate + '"}',
-                dataType: "json",
-                type: "post",
-                success: function (data) {
-                    // var activityID = data.activity_id;
-                    // setCookie("userOrderActivityID", data.activity_id, 2);
-                    $("#activity_place").text(data.activity_place);
-                    $("#activity_date").text(data.activity_date);
-                    $("#activity_number").text(data.activity_id);
-                    $("#activityStatus").text(data.activity_status);
-                    if(data.activity_status != 0){
-                        $("#status").text("活动进行中");
-                    }else {
-                        $("#status").text("活动以取消");
-                    }
-                }
-            });
         }
         function setCookie(activityIdKey, activityIdValue, exdays) {
             var date = new Date();
@@ -76,8 +79,15 @@
             var expires = "expires=" + date.toGMTString();
             document.cookie = activityIdKey + "=" + activityIdValue + "; " + expires;
         }
-
-
+        function getCookie(activityIdKey){
+            var activityKey = activityIdKey + "=";
+            var activityValue = document.cookie.split(';');
+            for(var i=0; i<activityValue.length; i++) {
+                var activity = activityValue[i].trim();
+                if (activity.indexOf(activityKey)==0) { return activity.substring(activityKey.length,activity.length); }
+            }
+            return "";
+        }
     </script>
 </head>
 <body onload="activityNotice()">

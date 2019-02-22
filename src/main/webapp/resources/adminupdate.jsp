@@ -38,15 +38,14 @@
             }
             return "";
         }
-    </script>
-    <script type="text/javascript">
-        $(function() {
+        function updateActivity(){
             var activityId = getCookie("activityID");
-            $("#btn-order").click(function () {
+            if(document.getElementById("option1").checked){
+                var activityStatus = '0';
                 $.ajax({
                     url: "http://localhost:8080/sports/admin/activityUpdate",
                     contentType: "application/json;charset=UTF-8",
-                    data: '{"activityId":"' + activityId + '"}',
+                    data: '{"activityId":"' + activityId + '","activity_status":"' + activityStatus +'"}',
                     dataType: "json",
                     type: "post",
                     success: function (data) {
@@ -57,8 +56,8 @@
                         }
                     }
                 });
-            })
-        })
+            }
+        }
         function setCookie(activityIdKey, activityIdValue, exdays) {
             var date = new Date();
             date.setTime(date.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -91,10 +90,9 @@
         </div>
 
         <div class="order-btn">
-            <input type="button" id="btn-order" class="btn btn-success" style="width: 100%; margin-top: 20%" value="确定修改">
+            <input type="button" id="btn-order" onclick="updateActivity()" class="btn btn-success" style="width: 100%; margin-top: 20%" value="确定修改">
         </div>
         <div id="showInfo" style="text-align: center; margin-top:5px;">
-
         </div>
     </div>
 </form>

@@ -11,6 +11,6 @@ public interface AdminService {
     NoteResult checkLogin (String username,String password) throws NoSuchAlgorithmException;
     AdminActivity createActivity(String activityDate,String activityPlace,String activityTime);
     AdminActivity activityQuery(String activityDate);
-    AdminActivity activityUpdate(String activityId);
+    AdminActivity activityUpdate(String activityId,String activityStatus);
     AdminActivity activityLoading(String currentDate);
 }

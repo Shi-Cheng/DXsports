@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-    <script>
+
+    <script type="text/javascript">
         function checkCookie(){
             var user = getCookie("username");
             var password = getCookie("password");
@@ -25,46 +26,37 @@
             }
             return "";
         }
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $("#btn-order").click(function () {
-                $("#count_msg").html(" ");
-                $("#password_msg").html(" ");
-                var uname = $(".login-name").val().trim();
-                var upwd = $(".login-word").val().trim();
-                var ok = true;
-                if (uname == "") {
-                    $("#count_msg").html("用户名不能为空");
-                    ok = false;
-                }
-                if (upwd == "") {
-                    $("#password_msg").html("密码不能为空");
-                    ok = false;
-                }
-                if (ok) {
-                    $.ajax({
-                        url: "http://localhost:8080/sports/user/checkLogin",
-                        contentType: "application/json;charset=UTF-8",
-                        data: '{"user_name":"' + uname + '","user_pwd":"' + upwd + '"}',
-                        dataType: "json",
-                        type: "post",
-                        success: function (data) {
-                            if (data.status == 0) { //用户存在
-                                location.href='index.jsp';
-                            } else if (data.status == 1) { //用户名不存在
-                                $("#count_msg").html(data.msg);
-                            } else if (data.status == 2) { //密码不正确
-                                $("#password_msg").html(data.msg);
-                            }
+        function userLogin(){
+            $("#count_msg").html(" ");
+            $("#password_msg").html(" ");
+            var uname = $(".login-name").val().trim();
+            var upwd = $(".login-word").val().trim();
+            var ok = true;
+            if (uname == "") {
+                $("#count_msg").html("用户名不能为空");
+                ok = false;
+            }
+            if (upwd == "") {
+                $("#password_msg").html("密码不能为空");
+                ok = false;
+            }
+            if (ok) {
+                $.ajax({
+                    url: "http://localhost:8080/sports/user/checkLogin",
+                    contentType: "application/json;charset=UTF-8",
+                    data: '{"user_name":"' + uname + '","user_pwd":"' + upwd + '"}',
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        if (data.status == 0) { //用户存在
+                            location.href='index.jsp';
+                        } else{
+                            $("#loginInfo").html(data.msg);
                         }
-                    });
-                }
-                $("#back").click(function () {
-                    location.href = 'index.jsp';
+                    }
                 });
-            });
-        })
+            }
+        }
     </script>
 </head>
 <body onload="checkCookie()">
@@ -92,8 +84,10 @@
                 密 - 码：<input type="password" id="login_password" name="user.password" class="login-word" style="width: 40%" /><br/>
                 <span id="password_msg" style="color: red" ></span>
             </div>
+            <div id="loginInfo" style="text-align: center; margin-bottom:5px; color: red">
+            </div>
             <div class="order-btn">
-                <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="登陆">
+                <input type="button" id="btn-order" onclick="userLogin()" class="btn btn-success" style="width: 80%" value="登陆">
                 <input type="button" name="" id="back" value=' 返 回 ' style="display: none" tabindex='10'/>
             </div>
         </form>

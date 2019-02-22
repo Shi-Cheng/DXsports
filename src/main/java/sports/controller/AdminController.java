@@ -54,11 +54,9 @@ public class AdminController {
     @ResponseBody
     public AdminActivity activityUpdate(@RequestBody AdminActivity admin){
         String activityId = admin.getActivity_id();
-        AdminActivity status = adminService.activityUpdate(activityId);
-        if (status != null){
-            return status;
-        }
-        return null;
+        String activityStatus = admin.getActivity_status();
+        AdminActivity status = adminService.activityUpdate(activityId,activityStatus);
+        return status;
     }
     /*
     * 用户端加载活动信息，返回活动地点、活动日期、活动状态数据

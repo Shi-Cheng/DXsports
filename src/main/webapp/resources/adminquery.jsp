@@ -24,12 +24,6 @@
         .query-notice{
             margin-left: 10%;
         }
-        .query-content{
-            width: 50%;
-            height: 40%;
-            border: 1px #2aabd2;
-            margin-top: 10%;
-        }
     </style>
     <script type="text/javascript">
         $(function() {

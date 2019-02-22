@@ -14,7 +14,6 @@
     <script type="text/javascript">
         $(function() {
             $("#queryBtn").click(function(){
-                //alert("this is queryButton")
                 location.href='activeorder.jsp';
             });
             $("#orderBtn").click(function () {

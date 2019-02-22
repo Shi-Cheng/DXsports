@@ -17,34 +17,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public NoteResult login(String username, String password) throws NoSuchAlgorithmException {
         NoteResult noteResult = new NoteResult();
-        // 33 111111
-        //if (userCheck(username, noteResult)) return noteResult;
         Map<String, String> userMap = new HashMap<>();
         userMap.put("user_name", username);
         JSONObject usernameJson = JSONObject.fromObject(userMap);
         String userCheckInfo = "{'args':['userLogin'," + usernameJson + "]}";
         //对于用户登陆  存在用户名则返回user对象，如果不存在返回  fail
-        String result = "{'user_id':'7f17a4c2303711e9b210d663bd873d93','user_name':'33','user_pwd':'lueSGJZetyySpUndWjMBEg=='}";
-        //String result = "fail";
-        System.out.println("============="+username+"========");
-        if (result.equals("fail")) {
-            System.out.println("==============fail===========");
-            noteResult.setStatus(1);
-            noteResult.setMsg("用户名不存在");
-            return noteResult;
-        }
-
         String userCheckResult = "{'user_id':'7f17a4c2303711e9b210d663bd873d93','user_name':'33','user_pwd':'lueSGJZetyySpUndWjMBEg=='}";//检测的密码111111
         User user = JSON.parseObject(userCheckResult,User.class);
         String md5_pwd = UserUtil.md5(password);
-        if(!user.getUser_pwd().equals(md5_pwd)){
-            noteResult.setStatus(2);
-            noteResult.setMsg("密码不正确");
+        if( username.equals(user.getUser_name()) && user.getUser_pwd().equals(md5_pwd)){
+            noteResult.setStatus(0);
+            noteResult.setMsg("用户名和密码正确");
+            return noteResult;
+        }else {
+            noteResult.setStatus(1);
+            noteResult.setMsg("请检查用户名和密码是否正确");
             return noteResult;
         }
-        noteResult.setStatus(0);
-        noteResult.setMsg("用户名和密码正确");
-        return noteResult;
     }
     @Override
     public NoteResult register(String username, String password) throws NoSuchAlgorithmException {
@@ -128,9 +117,6 @@ public class UserServiceImpl implements UserService {
         userReserve.setActivity_id(activityId);
         userReserve.setUser_id(userId);
         JSONObject jsonObj = JSONObject.fromObject(userReserve);
-        /*
-         * 用户对活动的取消操作相当于把Status修改后再重新上链
-         * */
         String activityJson = "{'args':['createReserve',"+jsonObj+"]}";
         //{"activity_id":"7f17a4c2303711e9b210d663bd873d93","reserve_id":"71da95b9f8af485387ab974539d36cd1","reserve_status":"1","user_id":"2e9a4c10bea74e7593c4f7f58aed2b87"}
         String test = "{'activity_id':'7f17a4c2303711e9b210d663bd873d93','reserve_id':'71da95b9f8af485387ab974539d36cd1','reserve_status':'1','user_id':'2e9a4c10bea74e7593c4f7f58aed2b87'}";

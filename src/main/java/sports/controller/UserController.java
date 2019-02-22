@@ -38,7 +38,7 @@ public class UserController {
     }
     @RequestMapping(value = "/checkLogin",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
-    public NoteResult checkLogin(@RequestBody User user,@CookieValue("uid") String uid) throws NoSuchAlgorithmException {
+    public NoteResult checkLogin(@RequestBody User user) throws NoSuchAlgorithmException {
         String username = user.getUser_name();
         String password = user.getUser_pwd();
         NoteResult noteResult = userService.login(username,password);

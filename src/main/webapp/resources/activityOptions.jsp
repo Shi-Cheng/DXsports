@@ -16,40 +16,42 @@
     </style>
     <script type="text/javascript">
         function userActivityInfo() {
-            var activityPlace = getCookie("useractivityPlace");
-            var activityDate = getCookie("useractivityDate");
-            var activityStatus = getCookie("useractivityStatus");
+            var cookieName = getCookie("username");
+            if(cookieName != null){
+                var activityPlace = getCookie("useractivityPlace");
+                var activityDate = getCookie("useractivityDate");
+                var activityStatus = getCookie("useractivityStatus");
 
-            $("#activity_place").text(activityPlace);
-            $("#activity_date").text(activityDate);
-            if(activityStatus != 0){
-                $("#status").text("活动进行中");
+                $("#activity_place").text(activityPlace);
+                $("#activity_date").text(activityDate);
+                if(activityStatus != 0){
+                    $("#status").text("活动进行中");
+                }else {
+                    $("#status").text("活动以取消");
+                    $("#option1").checked = true;
+                }
             }else {
-                $("#status").text("活动以取消");
-                $("#option1").checked = true;
+                window.location = "login.jsp";
             }
         }
         function updateActivity(){
             var activityId = getCookie("useractivityId");
-            if($("input:radio[name='checks']:checked")){
+            if(document.getElementById("option1").checked){
                 var activityStatus = '0';
                 setCookie("useractivityStatus",activityStatus, 2);
                 $("#status").text("活动以取消");
-            }
-            $.ajax({
-                url: "http://localhost:8080/sports/user/activityCancel",
-                contentType: "application/json;charset=UTF-8",
-                //修改状态
-                data: '{"activity_id":"' + activityId +'","reserve_status":"' + activityStatus +'"}',
-                dataType: "json",
-                type: "post",
-                success: function (data) {
-                    //前台获取用户预约的状态，进行动态显示
-                    if(data.reserve_status == 1) {
-                        $("#status").text("活动以取消");
+                $.ajax({
+                    url: "http://localhost:8080/sports/user/activityCancel",
+                    contentType: "application/json;charset=UTF-8",
+                    //修改状态
+                    data: '{"activity_id":"' + activityId +'","reserve_status":"' + activityStatus +'"}',
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        $("#orderUpdate").html('<p style="margin-top:10%;color: #32CD32;"> 取消成功！</p>');
                     }
-                }
-            });
+                });
+            }
         }
         function getCookie(activityIdKey){
             var activityKey = activityIdKey + "=";
@@ -91,8 +93,10 @@
             <label >本次活动：</label>
             <input type="radio" name="checks" id="option1" value="0"> 放弃本次活动&nbsp;&nbsp;
         </div>
+        <div id="orderUpdate" style="text-align: center;color: #3D9140;">
+        </div>
         <div class="order-btn">
-            <input onclick="updateActivity()" type="button" id="btn-order" class="btn btn-success" style="width: 100%; margin-top: 20%" value="确定修改">
+            <input onclick="updateActivity()" type="button" id="btn-order" class="btn btn-success" style="width: 100%; margin-top:5%" value="确定修改">
         </div>
     </div>
 </form>
