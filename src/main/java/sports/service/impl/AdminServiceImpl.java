@@ -18,13 +18,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public NoteResult checkLogin(String username, String password) throws NoSuchAlgorithmException {
         NoteResult result = new NoteResult();
-        Map<String,String> adminMap = new HashMap<String,String>();
+        Map<String,String> adminMap = new HashMap<>();
         adminMap.put("username",username);
         JSONObject jsonObj = JSONObject.fromObject(adminMap);
         String jsonAdmin = "{'args':['queryAdmin',"+jsonObj+"]}";
         //调用智能合约，进行管理员身份校验   根据用户名查询，如果存在则返回密码，如果不存在则返回null
         //需要智能合约返回AdminLogin json数组
-
         String adminResult = "{'username':'admin','password':'ISMvKXpXpadDiUoOSoAfww=='}";//ISMvKXpXpadDiUoOSoAfww==
         AdminLogin adminLogin = JSON.parseObject(adminResult,AdminLogin.class);
         System.out.println("============adminPassword====="+adminLogin.getPassword()+"=============");
@@ -38,7 +37,6 @@ public class AdminServiceImpl implements AdminService {
             result.setMsg("请检查用户名和密码");
             return result;
         }
-
     }
     @Override
     public AdminActivity createActivity(String activityDate, String activityPlace, String activityTime) {
@@ -60,7 +58,6 @@ public class AdminServiceImpl implements AdminService {
     }
     @Override
     public AdminActivity activityQuery(String activityDate) {
-        AdminActivity adminActivity = new AdminActivity();
         Map<String,String> map = new HashMap<>();
         map.put("activityDate",activityDate);
         JSONObject jsonObj = JSONObject.fromObject(map);
@@ -116,6 +113,5 @@ public class AdminServiceImpl implements AdminService {
         String Test = "{'activity_id':'7f17a4c2303711e9b210d663bd873d93','activity_place':'centralpark','activity_period':'6:00-8:00','activity_date':'2019-1-28','activity_status':'1'}";
         AdminActivity activityInfo = JSON.parseObject(Test, AdminActivity.class); //返回一个活动对象
         return activityInfo;
-
     }
 }

@@ -14,27 +14,31 @@
             $("#btn-order").click(function () {
                 var uname = $(".login-name").val().trim();
                 var upwd = $(".login-word").val().trim();
-                $.ajax({
-                    url:"http://localhost:8080/sports/user/loginInfo",
-                    contentType:"application/json;charset=UTF-8",
-                    data:'{"user_name":"'+uname+'","user_pwd":"'+upwd+'"}',
-                    dataType:"json",
-                    type:"post",
-                    success:function (data) {
-                        if(data.status == 0){
-                            alert("注册成功！将返回到登陆页面");
-                            var username = uname;
-                            var password = upwd;
-                            console.log("============"+username);
-                            setCookie("username", username, 2);
-                            setCookie("password", password, 2);
-                            $("#back").click();
-                        }else if(data.status == 1){ //用户已存在
-                            $("#warning_1 span").html(data.msg);
-                            $("#warning_1").show();//显示提示信息
+                if( uname == "" && upwd == ""){
+                    $("#loginInfo").html("请输入合法的用户名和密码");
+                }else {
+                    $.ajax({
+                        url:"http://localhost:8080/sports/user/loginInfo",
+                        contentType:"application/json;charset=UTF-8",
+                        data:'{"user_name":"'+uname+'","user_pwd":"'+upwd+'"}',
+                        dataType:"json",
+                        type:"post",
+                        success:function (data) {
+                            if(data.status == 0){
+                                alert("注册成功！将返回到登陆页面");
+                                var username = uname;
+                                var password = upwd;
+                                console.log("============"+username);
+                                setCookie("username", username, 2);
+                                setCookie("password", password, 2);
+                                $("#back").click();
+                            }else if(data.status == 1){ //用户已存在
+                                $("#warning_1 span").html(data.msg);
+                                $("#warning_1").show();//显示提示信息
+                            }
                         }
-                    }
-                });
+                    });
+                }
 
             });
             $("#back").click(function () {
@@ -48,7 +52,6 @@
             }
         });
     </script>
-
 </head>
 <body>
     <div class="bar-top">
@@ -79,10 +82,12 @@
                 确认密码：<input type="password" id="final_password" name="密码" class="check-word"  style="width: 40%"/>
                 <div class='warning' id='warning_3' style="display: none; color:#FF0000"><span>密码输入不一致</span></div>
             </div>
+            <div id="loginInfo" style="text-align: center; color: red"></div>
             <div class="order-btn">
                 <input type="button" id="btn-order" class="btn btn-success" style="width: 80%" value="注册">
                 <input type="button" name="" id="back" value=' 返 回 ' style="display: none" tabindex='10'/>
             </div>
+
         </form>
         <div class="optionr-btn">
             <a href="login.jsp">已有账户</a>
