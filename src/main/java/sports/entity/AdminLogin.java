@@ -4,8 +4,17 @@ package sports.entity;
     * 同时，管理员信息是由系统给定
     * */
 public class AdminLogin {
+    private String adminid;
     private String username;
     private String password;
+
+        public String getAdminid() {
+            return adminid;
+        }
+
+        public void setAdminid(String adminid) {
+            this.adminid = adminid;
+        }
 
         public String getUsername() {
             return username;
@@ -26,7 +35,8 @@ public class AdminLogin {
         @Override
         public String toString() {
             return "AdminLogin{" +
-                    "username='" + username + '\'' +
+                    "adminid='" + adminid + '\'' +
+                    ", username='" + username + '\'' +
                     ", password='" + password + '\'' +
                     '}';
         }

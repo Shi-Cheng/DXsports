@@ -23,7 +23,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--开启spingMVC注解的支持-->
-
     <mvc:annotation-driven />
 
 

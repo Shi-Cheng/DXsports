@@ -26,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
         //需要智能合约返回AdminLogin json数组
         String adminResult = "{'username':'admin','password':'ISMvKXpXpadDiUoOSoAfww=='}";//ISMvKXpXpadDiUoOSoAfww==
         AdminLogin adminLogin = JSON.parseObject(adminResult,AdminLogin.class);
+        System.out.println();
         System.out.println("============adminPassword====="+adminLogin.getPassword()+"=============");
         String md5_adminPassWord = UserUtil.md5(password);
         if(username.equals(adminLogin.getUsername()) && adminLogin.getPassword().equals(md5_adminPassWord)){

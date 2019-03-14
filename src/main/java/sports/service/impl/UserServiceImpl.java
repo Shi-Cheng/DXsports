@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         if (result.equals("fail")) {
             System.out.println("==============fail===========");
             noteResult.setStatus(1);
-            noteResult.setMsg("用户名不存在");
+            noteResult.setMsg("用户名存在");
             return noteResult;
         }
         String userUUID = UserUtil.creadid();
